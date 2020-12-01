@@ -4,7 +4,9 @@ import { parse } from "https://deno.land/std@0.79.0/flags/mod.ts";
 let args = parse(Deno.args);
 
 if (args._.length < 1) {
-    throw 'Must pass at least 1 day to run!';
+    for (let i=1; i <= 25; i++) {
+        args._.push(`day${i.toString().padStart(2, '0')}`);
+    }
 }
 
 for (let day of args._) {
