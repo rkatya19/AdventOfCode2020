@@ -1,9 +1,9 @@
-import { getInput } from '../common.ts';
+import { getInput, tick, tock } from '../common.ts';
 
 let input = await getInput(1);
-
 let values = input.split('\n');
 
+tick();
 let map: Map<number, number> = new Map();
 for (let i=0; i < values.length; i++) {
     let v1 = Number(values[i]);
@@ -15,7 +15,7 @@ for (let i=0; i < values.length; i++) {
         let remain = 2020 - (v1 + v2);
 
         if (map.has(remain)) {
-            console.log(v1 * v2 * remain, v1, v2, remain);
+            console.log(v1 * v2 * remain, tock());
             breakFlag = true;
             break;
         }
