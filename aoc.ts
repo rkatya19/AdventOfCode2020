@@ -1,7 +1,7 @@
 import { exists } from "https://deno.land/std@0.79.0/fs/mod.ts";
 import { parse } from "https://deno.land/std@0.79.0/flags/mod.ts";
 
-let args = parse(Deno.args);
+let args = parse(Deno.args, {boolean: true});
 
 if (args._.length < 1) {
     for (let i=1; i <= 25; i++) {
@@ -13,12 +13,20 @@ for (let day of args._) {
     let rootPath = `./src/${day}/`;
     if (await exists(rootPath + `${day}_a.ts`)) {
         console.log(`Running ${day} A:`);
-        await runFile(rootPath + `${day}_a.ts`);
+
+        let time = await runFile(rootPath + `${day}_a.ts`);
+        if (time) {
+            Deno.stdout.write(time);
+        }
     }
 
     if (await exists(rootPath + `${day}_b.ts`)) {
         console.log(`Running ${day} B:`);
-        await runFile(rootPath + `${day}_b.ts`);
+
+        let time = await runFile(rootPath + `${day}_b.ts`);
+        if (time) {
+            Deno.stdout.write(time);
+        }
     }
 }
 
@@ -32,7 +40,9 @@ async function runFile(path: string) {
 
     if (code === 0) {
         const rawOutput = await p.output();
+        const rawError = await p.stderrOutput();
         await Deno.stdout.write(rawOutput);
+        return rawError;
     } else {
         const rawError = await p.stderrOutput();
         const errorString = new TextDecoder().decode(rawError);

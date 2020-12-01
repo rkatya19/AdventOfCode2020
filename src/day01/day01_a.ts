@@ -1,18 +1,18 @@
 import { getInput, tick, tock } from '../common.ts';
 
 let input = await getInput(1);
-let values = input.split('\n');
+let values = input.split('\n').map(v => Number(v));
 
 tick();
 let map: Map<number, number> = new Map();
 for (let value of values) {
-    let val = Number(value);
-    let remain = 2020 - val;
+    let remain = 2020 - value;
 
     if (map.has(remain)) {
-        console.log(val * remain, tock());
+        console.error(tock());
+        console.log(value * remain);
         break;
     } else {
-        map.set(val, remain);
+        map.set(value, remain);
     }
 }
