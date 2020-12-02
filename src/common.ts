@@ -1,6 +1,5 @@
 import { exists } from "https://deno.land/std@0.79.0/fs/mod.ts";
 
-const SESSION_ID = '';
 let timer = 0;
 
 export async function getInput(day: number): Promise<string> {
@@ -11,6 +10,7 @@ export async function getInput(day: number): Promise<string> {
     if (await exists(filePath)) {
         data = await Deno.readTextFile(filePath);
     } else {
+        const SESSION_ID = JSON.parse(Deno.readTextFileSync('config.json')).SESSION_ID;
         let response = await fetch(`https://adventofcode.com/2020/day/${day}/input`, {
             headers: {
                 'Cookie': `session=${SESSION_ID}`,
@@ -33,7 +33,7 @@ export function tick() {
 
 export function tock() {
     let elapsed = round(performance.now() - timer, 4);
-    return `\x1b[38;2;0;0;255m${elapsed} ms\x1b[0m`
+    return `\x1b[38;2;0;255;255m${elapsed} ms\x1b[0m`
 }
 
 function round(num: number, decimalPlaces: number = 0) {

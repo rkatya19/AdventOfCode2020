@@ -5,11 +5,11 @@ let values = input.split('\n').map(v => Number(v));
 
 tick();
 let map = new Uint16Array(2020);
-for (let i=0; i < values.length; i++) {
+for (let i = 0; i < values.length; i++) {
     let v1 = values[i];
 
     let breakFlag = false;
-    for (let j=i+1; j < values.length; j++) {
+    for (let j = i + 1; j < values.length; j++) {
         let v2 = values[j];
 
         let remain = 2020 - (v1 + v2);

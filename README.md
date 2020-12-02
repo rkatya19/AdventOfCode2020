@@ -21,7 +21,7 @@ Advent of Code 2020
 	cd AdventOfCode2020
 	```
 
-2. Update SESSION_ID in common.ts
+2. Create a config.json and add a SESSION_ID entry with your AoC input's cookie id.
 
 3. Run
 	```
