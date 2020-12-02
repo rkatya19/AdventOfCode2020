@@ -26,16 +26,19 @@ for (let day of args._) {
 
 async function runFile(path: string) {
     let p = Deno.run({
-        cmd: ['deno', 'run', '--allow-all', '--unstable', path],
+        cmd: ['deno', 'run', '-A', '--unstable', path],
         stdout: 'piped',
         stderr: 'piped'
     });
-    const { code } = await p.status();
 
+    const outBuff = new Uint8Array(1024);
+    while (await p.stdout.read(outBuff)) {
+        await Deno.stdout.write(outBuff);
+    }
+
+    const { code } = await p.status();
     if (code === 0) {
-        const rawOutput = await p.output();
         const rawError = await p.stderrOutput();
-        await Deno.stdout.write(rawOutput);
         await Deno.stdout.write(rawError);
     } else {
         const rawError = await p.stderrOutput();
