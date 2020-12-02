@@ -27,3 +27,5 @@ Advent of Code 2020
 	```
 	deno run -A --unstable aoc.ts day01
 	```
+
+4. Celebrate!
